@@ -14,6 +14,7 @@ RUNBACKUP_IONICE="ionice -c 3"
 # Binary names
 BIN_JAVA="java"
 BIN_RDIFF="rdiff-backup"
+BIN_TAR="tar"
 
 # Messages
 SAY_BACKUP_START="Backup started..."
@@ -42,6 +43,8 @@ SERVERNAME="Minecraft Server"
 SERVERDIR="/opt/minecraft"
 # Backup directory
 BACKUPDIR="/opt/backups/minecraft"
+# Filename for full backup (using tar)
+FULLBACKUP="/opt/backups/minecraft.tar.gz"
 # Quota for backup directory
 BACKUP_QUOTA_MiB=5000
 
@@ -51,7 +54,7 @@ EOCONF
 fi
 
 # Check if binaries exist
-BINS=( "${BIN_JAVA} ${BIN_RDIFF}" )
+BINS=( "${BIN_JAVA} ${BIN_RDIFF} ${BIN_TAR}" )
 for BIN in $BINS;
 do
   type -P $BIN &>/dev/null && continue || echo "'$BIN not found! Run 'apt-get install $BIN' to fix this"; exit 1
@@ -144,9 +147,27 @@ function mc_saveon() {
 function mc_backup() {
   [ ${DODEBUG} -eq 1 ] && set -x
 
+  # Full backup (tar)!
   if [[ ${1} == "full" ]]; then
-    echo "full"
-    exit 
+
+    # Build exclude string
+    local _tarexcludes=""
+    for i in ${RDIFF_EXCLUDES[@]}
+    do
+      _tarexcludes="$_tarexcludes --exclude ${SERVERDIR}/$i"
+    done
+
+    # Check if permissions are okay
+    echo -ne "Check for correct permissions ..."
+    touchtest=$((touch $FULLBACKUP) >/dev/null 2>&1)
+    touchstatus=$?
+    [ $touchstatus -eq 0 ] && echo -ne "done\n" && rm $FULLBACKUP
+    [ $touchstatus -ne 0 ] && echo -ne "failed\n> ${touchtest}\n" && exit
+
+    echo -ne "Full backup '${FULLBACKUP}' ..."
+    ${RUNBACKUP_NICE} ${RUNBACKUP_IONICE} ${BIN_TAR} czf ${FULLBACKUP} ${SERVERDIR} ${_tarexcludes} >/dev/null 2>&1
+    echo -ne "done\n"
+    exit 1
   fi
 
   [ -d "${BACKUPDIR}" ] || mkdir -p "${BACKUPDIR}"
