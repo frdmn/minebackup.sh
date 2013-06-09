@@ -7,14 +7,16 @@
 # Settings
 #####
 
-# nice and ionice settings
-RUNBACKUP_NICE="nice -n19"
-RUNBACKUP_IONICE="ionice -c 3"
-
 # Binary names
 BIN_JAVA="java"
 BIN_RDIFF="rdiff-backup"
 BIN_TAR="tar"
+BIN_NICE="nice"
+BIN_IONICE="ionice"
+
+# nice and ionice settings
+RUNBACKUP_NICE="${BIN_NICE} -n19"
+RUNBACKUP_IONICE="${BIN_IONICE} -c 3"
 
 # Messages
 SAY_BACKUP_START="Backup started..."
@@ -54,7 +56,7 @@ EOCONF
 fi
 
 # Check if binaries exist
-BINS=( "${BIN_JAVA} ${BIN_RDIFF} ${BIN_TAR}" )
+BINS=( "${BIN_JAVA} ${BIN_RDIFF} ${BIN_TAR} ${BIN_NICE} ${BIN_IONICE}" )
 for BIN in $BINS;
 do
   type -P $BIN &>/dev/null && continue || echo "'$BIN not found! Run 'apt-get install $BIN' to fix this"; exit 1
@@ -165,7 +167,7 @@ function mc_backup() {
     [ $touchstatus -ne 0 ] && echo -ne "failed\n> ${touchtest}\n" && exit
 
     echo -ne "Full backup '${FULLBACKUP}' ..."
-    ${RUNBACKUP_NICE} ${RUNBACKUP_IONICE} ${BIN_TAR} czf ${FULLBACKUP} ${SERVERDIR} ${_tarexcludes} >/dev/null 2>&1
+    echo ${RUNBACKUP_NICE} ${RUNBACKUP_IONICE} ${BIN_TAR} czf ${FULLBACKUP} ${SERVERDIR} ${_tarexcludes} >/dev/null 2>&1
     echo -ne "done\n"
     exit 1
   fi
