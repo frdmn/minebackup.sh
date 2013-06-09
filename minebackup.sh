@@ -8,7 +8,6 @@
 #####
 
 # Binary names
-BIN_JAVA="java"
 BIN_RDIFF="rdiff-backup"
 BIN_TAR="tar"
 BIN_NICE="nice"
@@ -52,11 +51,18 @@ BACKUP_QUOTA_MiB=5000
 
 # Exclude the following files/directories in backups
 RDIFF_EXCLUDES=(server.log plugins/dynmap/web/tiles/)
+
+## Overridable configurations (remove "#" to activate)
+#RUNBACKUP_NICE="${BIN_NICE} -n19"
+#RUNBACKUP_IONICE="${BIN_IONICE} -c 3"
+
+#SAY_BACKUP_START="Backup started..."
+#SAY_BACKUP_FINISHED="Backup successfully finished."
 EOCONF
 fi
 
 # Check if binaries exist
-BINS=( "${BIN_JAVA} ${BIN_RDIFF} ${BIN_TAR} ${BIN_NICE} ${BIN_IONICE}" )
+BINS=( "${BIN_RDIFF} ${BIN_TAR} ${BIN_NICE} ${BIN_IONICE}" )
 for BIN in $BINS;
 do
   type -P $BIN &>/dev/null && continue || echo "'$BIN not found! Run 'apt-get install $BIN' to fix this"; exit 1
