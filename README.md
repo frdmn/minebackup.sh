@@ -36,7 +36,7 @@ You can also override:
 ## Bash script
 
     cd /tmp
-    git clone git@github.com:frdmn/minebackup.sh.git
+    git clone https://github.com/frdmn/minebackup.sh.git
     mv minebackup.sh/minebackup.sh /usr/bin/minebackup
     chmod +x /usr/bin/minebackup
     mkdir -p /opt/backups/minecraft
