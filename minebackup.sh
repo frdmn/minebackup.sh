@@ -173,7 +173,7 @@ function mc_backup() {
     [ $touchstatus -ne 0 ] && echo -ne "failed\n> ${touchtest}\n" && exit
 
     echo -ne "Full backup '${FULLBACKUP}' ..."
-    echo ${RUNBACKUP_NICE} ${RUNBACKUP_IONICE} ${BIN_TAR} czf ${FULLBACKUP} ${SERVERDIR} ${_tarexcludes} >/dev/null 2>&1
+    ${RUNBACKUP_NICE} ${RUNBACKUP_IONICE} ${BIN_TAR} czf ${FULLBACKUP} ${SERVERDIR} ${_tarexcludes} >/dev/null 2>&1
     echo -ne "done\n"
     exit 1
   fi
