@@ -162,7 +162,7 @@ function mc_backup() {
     local _tarexcludes=""
     for i in ${RDIFF_EXCLUDES[@]}
     do
-      _tarexcludes="$_tarexcludes --exclude ${SERVERDIR}/$i"
+      _tarexcludes="$_tarexcludes --exclude='${SERVERDIR}/$i'"
     done
 
     # Check if permissions are okay
