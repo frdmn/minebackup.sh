@@ -62,7 +62,7 @@ Differential backup every 5 minutes, fullbackup 2 days at 5:30 am:
 
 Differential backup every 30 minutes, fullbackup every 7 days at 6:45 pm:
 
-    */15 * * * * /usr/bin/minebackup backup
+    */30 * * * * /usr/bin/minebackup backup
     45 18 */7 * * /usr/bin/minebackup backup full
 
 # Depencies
