@@ -112,7 +112,7 @@ function as_user() {
 # 'Check running process' function
 function is_running() {
   [ ${DODEBUG} -eq 1 ] && set -x
-  if ps aux | grep -v grep | grep SCREEN | grep "${SCREENNAME} " >/dev/null 2>&1
+  if ps aux | grep -v grep | grep SCREEN | grep $SCREENNAME >/dev/null 2>&1
   then
     return 0 
   else
