@@ -175,7 +175,6 @@ function mc_backup() {
     echo -ne "Full backup '${FULLBACKUP}' ..."
     ${RUNBACKUP_NICE} ${RUNBACKUP_IONICE} ${BIN_TAR} czf ${FULLBACKUP} ${SERVERDIR} ${_tarexcludes} >/dev/null 2>&1
     echo -ne "done\n"
-    exit 1
   fi
 
   [ -d "${BACKUPDIR}" ] || mkdir -p "${BACKUPDIR}"
