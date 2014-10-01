@@ -1,7 +1,7 @@
 minebackup.sh
 =============
 
-Bash script to backup Minecraft servers using rdiff-backup CPU and I/O friendly.
+Bash script to backup Minecraft servers using `rdiff-backup` CPU and I/O friendly.
 
 # Commands
 
@@ -35,12 +35,11 @@ You can also override:
 
 ## Bash script
 
-    cd /tmp
+    cd /usr/local/src
     git clone https://github.com/frdmn/minebackup.sh.git
-    mv minebackup.sh/minebackup.sh /usr/bin/minebackup
-    chmod +x /usr/bin/minebackup
+    ln -s /usr/local/src/minebackup.sh/minebackup.sh /usr/bin/minebackup
     mkdir -p /opt/backups/minecraft
-    chown -R <$user> /opt/backups
+    chown -R ${USER} /opt/backups
 
 ## Cron job examples
 
@@ -49,7 +48,7 @@ To open the crontab in your default editor:
     crontab -e
 
 ---
-    
+
 Differential backup every 15 minutes, fullbackup every day at 0:00 am:
 
     */15 * * * * /usr/bin/minebackup backup
@@ -65,7 +64,7 @@ Differential backup every 30 minutes, fullbackup every 7 days at 6:45 pm:
     */30 * * * * /usr/bin/minebackup backup
     45 18 */7 * * /usr/bin/minebackup backup full
 
-# Depencies
+# Dependencies
 
 You need `rdiff-backup`, `nice`, `ionice` and `tar` to use all features of minebackup.sh:
 
