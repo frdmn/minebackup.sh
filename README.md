@@ -66,6 +66,8 @@ Differential backup every 30 minutes, fullbackup every 7 days at 6:45 pm:
 
 # Dependencies
 
-You need `rdiff-backup`, `nice`, `ionice` and `tar` to use all features of minebackup.sh:
+You need `rdiff-backup`, `nice`, `ionice` and `tar` binaries to use all features of minebackup.sh:
 
-    apt-get install rdiff-backup nice ionice tar
+    apt-get install rdiff-backup tar
+
+(`nice` and `ionice` are preinstalled on Debian derivates)
