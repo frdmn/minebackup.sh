@@ -36,6 +36,8 @@ else
   # Create default one
   echo "[INFO] Creating default configuration file $SETTINGS_FILE"
   cat > $SETTINGS_FILE << EOCONF
+# User running screen session
+USER="minecraft"
 # Screen session name
 SCREENNAME="minecraft"
 # Display name of your server
